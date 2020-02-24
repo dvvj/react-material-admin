@@ -17,7 +17,7 @@ import useStyles from "./styles";
 
 // logo
 import logo from "./logo.svg";
-import google from "../../images/google.svg";
+//import google from "../../images/google.svg";
 
 // context
 import { useUserDispatch, loginUser } from "../../context/UserContext";
@@ -52,17 +52,17 @@ function Login(props) {
             centered
           >
             <Tab label="Login" classes={{ root: classes.tab }} />
-            <Tab label="New User" classes={{ root: classes.tab }} />
+            {/* <Tab label="New User" classes={{ root: classes.tab }} /> */}
           </Tabs>
           {activeTabId === 0 && (
             <React.Fragment>
               <Typography variant="h1" className={classes.greeting}>
                 Good Morning, User
               </Typography>
-              <Button size="large" className={classes.googleButton}>
+              {/* <Button size="large" className={classes.googleButton}>
                 <img src={google} alt="google" className={classes.googleIcon} />
                 &nbsp;Sign in with Google
-              </Button>
+              </Button> */}
               <div className={classes.formDividerContainer}>
                 <div className={classes.formDivider} />
                 <Typography className={classes.formDividerWord}>or</Typography>
@@ -231,7 +231,7 @@ function Login(props) {
                 <Typography className={classes.formDividerWord}>or</Typography>
                 <div className={classes.formDivider} />
               </div>
-              <Button
+              {/* <Button
                 size="large"
                 className={classnames(
                   classes.googleButton,
@@ -240,7 +240,7 @@ function Login(props) {
               >
                 <img src={google} alt="google" className={classes.googleIcon} />
                 &nbsp;Sign in with Google
-              </Button>
+              </Button> */}
             </React.Fragment>
           )}
         </div>
