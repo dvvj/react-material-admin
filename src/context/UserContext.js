@@ -1,4 +1,5 @@
 import React from "react";
+import DataSrcDS from "../data/DataSrcDS";
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -49,19 +50,44 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 
 // ###########################################################
 
+const dataSrc = new DataSrcDS("https://localhost:20433", () => console.log('todo'), () => console.log('todo'));
+
 function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   setError(false);
   setIsLoading(true);
 
   if (!!login && !!password) {
-    setTimeout(() => {
-      localStorage.setItem('id_token', 1)
-      setError(null)
-      setIsLoading(false)
-      dispatch({ type: 'LOGIN_SUCCESS' })
+    const userpass = {
+      user: login,
+      pass: password
+    };
+    dataSrc.doLogin(
+      userpass,
+      resp => {
+        console.log("login resp: ", resp);
 
-      history.push('/app/dashboard')
-    }, 2000);
+        // test login resp:
+        localStorage.setItem('id_token', 1)
+        setError(null)
+        setIsLoading(false)
+        dispatch({ type: 'LOGIN_SUCCESS' })
+      
+        history.push('/app/dashboard')
+      },
+      err => {
+          let errMsg = `登录失败（${err.status}:${err.statusText}）`;
+          console.log(errMsg);
+          //this.sbarRef.current.err(errMsg);
+      }
+    )
+    // setTimeout(() => {
+    //   localStorage.setItem('id_token', 1)
+    //   setError(null)
+    //   setIsLoading(false)
+    //   dispatch({ type: 'LOGIN_SUCCESS' })
+
+    //   history.push('/app/dashboard')
+    // }, 2000);
   } else {
     dispatch({ type: "LOGIN_FAILURE" });
     setError(true);
