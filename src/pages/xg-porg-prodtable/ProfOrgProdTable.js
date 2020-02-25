@@ -25,6 +25,8 @@ import DataSrcDS from '../../data/DataSrcDS';
 import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
 import ApplyMedSalesDlg from '../xg-adm-applysalesdlg/ApplyMedSalesDlg';
 
+import {getUid} from '../../context/SessionContext';
+
 const tableIcons = {
     ApplySales: forwardRef((props, ref) => <PlaylistAddCheck {...props} ref={ref} />),
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -70,7 +72,7 @@ class ProfOrgProdTable extends Component {
   }
 
   getProfOrgId = () => {
-    return this.dataSrc.getUid();
+    return getUid();
   }
 
   async componentDidMount() {
