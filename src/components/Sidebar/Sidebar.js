@@ -28,9 +28,10 @@ import {
   useLayoutDispatch,
   toggleSidebar,
 } from "../../context/LayoutContext";
+import RouteConsts from "../RouteConsts";
 
 const structure = [
-  { id: 0, label: "Dashboard", link: "/app/dashboard", icon: <HomeIcon /> },
+  { id: 0, label: "Dashboard", link: RouteConsts.AdminProdTable, icon: <HomeIcon /> },
   {
     id: 1,
     label: "Typography",

@@ -9,4 +9,12 @@ module.exports = function(app) {
       secure: false
     })
   );
+  app.use(
+    "/product",
+    proxy({
+      target: "https://localhost:20443",
+      changeOrigin: true,
+      secure: false
+    })
+  );
 };

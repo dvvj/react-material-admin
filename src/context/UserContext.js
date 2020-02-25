@@ -1,5 +1,6 @@
 import React from "react";
 import DataSrcDS from "../data/DataSrcDS";
+import RouteConsts from "../components/RouteConsts";
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -72,7 +73,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
         setIsLoading(false)
         dispatch({ type: 'LOGIN_SUCCESS' })
       
-        history.push('/app/dashboard')
+        history.push(RouteConsts.AdminProdTable)
       },
       err => {
           let errMsg = `登录失败（${err.status}:${err.statusText}）`;

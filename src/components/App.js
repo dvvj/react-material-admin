@@ -10,6 +10,7 @@ import Login from "../pages/login";
 
 // context
 import { useUserState } from "../context/UserContext";
+import RouteConsts from "./RouteConsts";
 
 export default function App() {
   // global
@@ -18,11 +19,11 @@ export default function App() {
   return (
     <HashRouter>
       <Switch>
-        <Route exact path="/" render={() => <Redirect to="/app/dashboard" />} />
+        <Route exact path="/" render={() => <Redirect to={RouteConsts.AdminProdTable} />} />
         <Route
           exact
           path="/app"
-          render={() => <Redirect to="/app/dashboard" />}
+          render={() => <Redirect to={RouteConsts.AdminProdTable} />}
         />
         <PrivateRoute path="/app" component={Layout} />
         <PublicRoute path="/login" component={Login} />
