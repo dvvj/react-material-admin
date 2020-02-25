@@ -51,13 +51,13 @@ function Login(props) {
             textColor="primary"
             centered
           >
-            <Tab label="Login" classes={{ root: classes.tab }} />
+            <Tab label="登 录" classes={{ root: classes.tab }} />
             {/* <Tab label="New User" classes={{ root: classes.tab }} /> */}
           </Tabs>
           {activeTabId === 0 && (
             <React.Fragment>
               <Typography variant="h1" className={classes.greeting}>
-                Good Morning, User
+              后台管理工具
               </Typography>
               {/* <Button size="large" className={classes.googleButton}>
                 <img src={google} alt="google" className={classes.googleIcon} />
@@ -65,12 +65,12 @@ function Login(props) {
               </Button> */}
               <div className={classes.formDividerContainer}>
                 <div className={classes.formDivider} />
-                <Typography className={classes.formDividerWord}>or</Typography>
+                <Typography className={classes.formDividerWord}>欢迎</Typography>
                 <div className={classes.formDivider} />
               </div>
               <Fade in={error}>
                 <Typography color="secondary" className={classes.errorMessage}>
-                  Something is wrong with your login or password :(
+                用户名/密码错误
                 </Typography>
               </Fade>
               <TextField
@@ -84,7 +84,7 @@ function Login(props) {
                 value={loginValue}
                 onChange={e => setLoginValue(e.target.value)}
                 margin="normal"
-                placeholder="Email Adress"
+                placeholder="用户名/手机号"
                 type="email"
                 fullWidth
               />
@@ -99,7 +99,7 @@ function Login(props) {
                 value={passwordValue}
                 onChange={e => setPasswordValue(e.target.value)}
                 margin="normal"
-                placeholder="Password"
+                placeholder="密 码"
                 type="password"
                 fullWidth
               />
@@ -125,16 +125,16 @@ function Login(props) {
                     color="primary"
                     size="large"
                   >
-                    Login
+                    登录
                   </Button>
                 )}
-                <Button
+                {/* <Button
                   color="primary"
                   size="large"
                   className={classes.forgetButton}
                 >
                   Forget Password
-                </Button>
+                </Button> */}
               </div>
             </React.Fragment>
           )}
@@ -244,9 +244,9 @@ function Login(props) {
             </React.Fragment>
           )}
         </div>
-        <Typography color="primary" className={classes.copyright}>
+        {/* <Typography color="primary" className={classes.copyright}>
           © 2014-2019 Flatlogic, LLC. All rights reserved.
-        </Typography>
+        </Typography> */}
       </div>
     </Grid>
   );

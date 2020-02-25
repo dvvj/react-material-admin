@@ -51,11 +51,26 @@ export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
 
 // ###########################################################
 
-const dataSrc = new DataSrcDS("https://localhost:20433", () => console.log('todo'), () => console.log('todo'));
-
 function loginUser(dispatch, login, password, history, setIsLoading, setError) {
+  const loginFail = errorMsg => {
+    setError(errorMsg);
+    setIsLoading(false);
+  };
+
   setError(false);
   setIsLoading(true);
+
+  const dataSrc = new DataSrcDS(
+    "https://localhost:20433",
+    () => {
+      console.log('401 error');
+      loginFail("401");
+    },
+    (status, error) => {
+      console.log('error', error);
+      loginFail(error);
+    }
+  );
 
   if (!!login && !!password) {
     const userpass = {
@@ -78,6 +93,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
       err => {
           let errMsg = `登录失败（${err.status}:${err.statusText}）`;
           console.log(errMsg);
+          setError(errMsg)
           //this.sbarRef.current.err(errMsg);
       }
     )
