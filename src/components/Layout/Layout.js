@@ -27,6 +27,7 @@ import Charts from "../../pages/charts";
 import { useLayoutState } from "../../context/LayoutContext";
 import RouteConsts from "../RouteConsts";
 import AdmProdTable from "../../pages/xg-adm-prodtable/AdmProdTable";
+import SharedOrderTable from "../../pages/xg-shared-ordertable/SharedOrderTable";
 
 function Layout(props) {
   var classes = useStyles();
@@ -47,8 +48,9 @@ function Layout(props) {
             <div className={classes.fakeToolbar} />
             <Switch>
               {/* <Route path="/app/dashboard" component={Dashboard} /> */}
-              <Route path={RouteConsts.AdminProdTable} component={AdmProdTable} />
-              <Route path="/app/typography" component={Typography} />
+              <Route path={RouteConsts.AdminProdTable.link} component={AdmProdTable} />
+              {/* <Route path="/app/typography" component={Typography} /> */}
+              <Route path={RouteConsts.OrderTable.link} component={SharedOrderTable} />
               <Route path="/app/tables" component={Tables} />
               <Route path="/app/notifications" component={Notifications} />
               <Route

@@ -19,11 +19,11 @@ export default function App() {
   return (
     <HashRouter>
       <Switch>
-        <Route exact path="/" render={() => <Redirect to={RouteConsts.AdminProdTable} />} />
+        <Route exact path="/" render={() => <Redirect to={RouteConsts.AdminProdTable.link} />} />
         <Route
           exact
           path="/app"
-          render={() => <Redirect to={RouteConsts.AdminProdTable} />}
+          render={() => <Redirect to={RouteConsts.AdminProdTable.link} />}
         />
         <PrivateRoute path="/app" component={Layout} />
         <PublicRoute path="/login" component={Login} />

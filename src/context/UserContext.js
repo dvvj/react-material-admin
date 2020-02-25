@@ -88,7 +88,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
         setIsLoading(false)
         dispatch({ type: 'LOGIN_SUCCESS' })
       
-        history.push(RouteConsts.AdminProdTable)
+        history.push(RouteConsts.AdminProdTable.link)
       },
       err => {
           let errMsg = `登录失败（${err.status}:${err.statusText}）`;

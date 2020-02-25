@@ -31,11 +31,10 @@ import {
 import RouteConsts from "../RouteConsts";
 
 const structure = [
-  { id: 0, label: "Dashboard", link: RouteConsts.AdminProdTable, icon: <HomeIcon /> },
+  { id: 0, label: RouteConsts.AdminProdTable.label, link: RouteConsts.AdminProdTable.link, icon: <HomeIcon /> },
   {
     id: 1,
-    label: "Typography",
-    link: "/app/typography",
+    label: RouteConsts.OrderTable.label, link: RouteConsts.OrderTable.link,
     icon: <TypographyIcon />,
   },
   { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
