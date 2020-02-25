@@ -27,6 +27,8 @@ import ProdImageSmall from '../xg-adm-prodimage/ProdImageSmall';
 import ApplyMedSalesDlg from '../xg-adm-applysalesdlg/ApplyMedSalesDlg';
 import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
 
+import { withStyles } from '@material-ui/core/styles';
+
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -48,7 +50,14 @@ const tableIcons = {
     ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />)
   };
 
-export default class AdmProdTable extends Component {
+const styles = {
+  container: {
+    backgroundColor: '#fff',
+    padding: '20px'
+  }
+};
+
+class AdmProdTable extends Component {
   constructor(props) {
     super(props);
     this.tableRef = React.createRef();
@@ -165,9 +174,10 @@ export default class AdmProdTable extends Component {
 
   render() {
     //const state = this.state;
+    const { classes } = this.props;
     return (
 
-      <Container>
+      <Container className={classes.container}>
         <SnackbarUtil ref={this.sbarRef} />
         <ApplyMedSalesDlg
           open={this.state.openApplyDlg}
@@ -226,3 +236,5 @@ export default class AdmProdTable extends Component {
   );
   }
 };
+
+export default withStyles(styles)(AdmProdTable);
