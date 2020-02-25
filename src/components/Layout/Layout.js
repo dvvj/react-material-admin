@@ -28,6 +28,7 @@ import { useLayoutState } from "../../context/LayoutContext";
 import RouteConsts from "../RouteConsts";
 import AdmProdTable from "../../pages/xg-adm-prodtable/AdmProdTable";
 import SharedOrderTable from "../../pages/xg-shared-ordertable/SharedOrderTable";
+import ProfOrgProdTable from "../../pages/xg-porg-prodtable/ProfOrgProdTable";
 
 function Layout(props) {
   var classes = useStyles();
@@ -51,7 +52,8 @@ function Layout(props) {
               <Route path={RouteConsts.AdminProdTable.link} component={AdmProdTable} />
               {/* <Route path="/app/typography" component={Typography} /> */}
               <Route path={RouteConsts.OrderTable.link} component={SharedOrderTable} />
-              <Route path="/app/tables" component={Tables} />
+              {/* <Route path="/app/tables" component={Tables} /> */}
+              <Route path={RouteConsts.PorgProdTable.link} component={ProfOrgProdTable} />
               <Route path="/app/notifications" component={Notifications} />
               <Route
                 exact

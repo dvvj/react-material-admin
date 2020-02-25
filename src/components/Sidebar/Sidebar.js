@@ -37,7 +37,7 @@ const structure = [
     label: RouteConsts.OrderTable.label, link: RouteConsts.OrderTable.link,
     icon: <TypographyIcon />,
   },
-  { id: 2, label: "Tables", link: "/app/tables", icon: <TableIcon /> },
+  { id: 2, label: RouteConsts.PorgProdTable.label, link: RouteConsts.PorgProdTable.link, icon: <TableIcon /> },
   {
     id: 3,
     label: "Notifications",
