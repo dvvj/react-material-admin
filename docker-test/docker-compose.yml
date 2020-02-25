@@ -4,5 +4,6 @@ services:
 
   admin_mui:
     image: "jiajidev/admin-mui"
+    network_mode: host
     ports:
       - '80:80'
