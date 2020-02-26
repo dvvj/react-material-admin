@@ -26,6 +26,7 @@ import { fontSize } from '@material-ui/system';
 import DataSrcDS from '../../data/DataSrcDS';
 import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
 import SetPassDlg from '../../components/XgSetPassDlg/SetPassDlg';
+import {log} from '../../utils/Util';
 
 const tableIcons = {
     Lock: forwardRef((props, ref) => <Lock {...props} ref={ref} />),
@@ -54,9 +55,10 @@ class AdmPorgMgmt extends Component {
     super(props);
     this.tableRef = React.createRef();
     this.dlgRef = React.createRef();
+    this.sbarRef = React.createRef();
 
     this.dataSrc = new DataSrcDS(
-      () => console.log('ProfOrgMgmt error handler todo')
+      () => log('ProfOrgMgmt error handler todo')
     );
   };
 
@@ -70,11 +72,11 @@ class AdmPorgMgmt extends Component {
   async componentDidMount() {
     // const results = await DataSrc.SysAdmin.getAllProfOrgsAndRewardPlans();
     const results = await this.dataSrc.profOrgMgmtReq();
-    console.log('results: ', results);
+    log('results: ', results);
 
     // reward plans
     const { pageRp, rewardPlans, totalCountRp } = results[1].data; //await DataSrc.SysAdmin.getAllProfOrgs();
-    console.log('rewardPlans:', rewardPlans);
+    log('rewardPlans:', rewardPlans);
 
     const rewardPlanMap = {};
     const rewardPlanDescMap = {};
@@ -85,7 +87,7 @@ class AdmPorgMgmt extends Component {
 
     // reward plan records for orgs
     const { pageRpc, rewardPlanRecs, totalCountRpc } = results[2].data; //await DataSrc.SysAdmin.getAllProfOrgs();
-    console.log('rewardPlan recs:', rewardPlanRecs);
+    log('rewardPlan recs:', rewardPlanRecs);
     const currRpMap = {}
     rewardPlanRecs.forEach(rpr => {
       currRpMap[rpr.uid] = rpr.planId;
@@ -95,7 +97,7 @@ class AdmPorgMgmt extends Component {
     proforgs.forEach( org => {
       org.rewardPlan = currRpMap[org.uid];
     })
-    console.log('proforgs:', proforgs);
+    log('proforgs:', proforgs);
     this.setState({ page, totalCount, rewardPlanMap, rewardPlanDescMap });
     this.setProfOrgs(proforgs);
   }
@@ -114,7 +116,7 @@ class AdmPorgMgmt extends Component {
     this.dataSrc.newProfOrg(
       proforgReq,
       newOrgResp => {
-        console.log('new ProfOrg: ', newOrgResp);
+        log('new ProfOrg: ', newOrgResp);
         const proforgs = this.state.proforgs;
         const { proforg, rewardPlanId } = newOrgResp.obj;
         const proforgRow = {...proforg, rewardPlan: rewardPlanId};
@@ -128,29 +130,33 @@ class AdmPorgMgmt extends Component {
 
   onRowUpdate = async (newOrgData, oldOrgData) => {
     // let uid = sessionStorage.getItem('uid');
-    // console.log('uid from session', uid);
+    // log('uid from session', uid);
     const proforgReq = {
       //proforg: newOrgData,
       ...newOrgData,
       rewardPlanId: newOrgData.rewardPlan
     };
-    console.log('updateProfOrg: ', proforgReq);
+    log('updateProfOrg: ', proforgReq);
 
     this.dataSrc.updateProfOrg(
       proforgReq, resp => {
-        var proforgs = this.state.proforgs;
-        console.log('updateProfOrg resp: ', resp, newOrgData);
+        let proforgs = this.state.proforgs;
+        log('updateProfOrg resp: ', resp);
+        this.sbarRef.current.showOpResp(resp, '更新成功');
+        if (resp.success !== false) {
+          proforgs = proforgs.filter(org => org.uid !== newOrgData.uid);
+          log('newOrgData: ', newOrgData);
+          proforgs.push(newOrgData);
+          this.setProfOrgs(proforgs);
+        }
         
-        proforgs = proforgs.filter(org => org.uid !== newOrgData.uid);
-        proforgs.push(newOrgData);
-        this.setProfOrgs(proforgs);
       }
     )
   }
   // onRowUpdate = (newOrgData, oldOrgData) =>
   //   new Promise(resolve => {
   //     // let uid = sessionStorage.getItem('uid');
-  //     // console.log('uid from session', uid);
+  //     // log('uid from session', uid);
   //     const proforgReq = {
   //       proforg: newOrgData,
   //       rewardPlanId: newOrgData.rewardPlan
@@ -160,7 +166,7 @@ class AdmPorgMgmt extends Component {
   //       proforgReq, resp => {
   //         resolve();
   //         var proforgs = this.state.proforgs;
-  //         console.log('updateProfOrg resp: ', resp, newOrgData);
+  //         log('updateProfOrg resp: ', resp, newOrgData);
           
   //         proforgs = proforgs.filter(org => org.uid !== newOrgData.uid);
   //         proforgs.push(newOrgData);
@@ -189,6 +195,7 @@ class AdmPorgMgmt extends Component {
     //const state = this.state;
     return (
       <Container>
+        <SnackbarUtil ref={this.sbarRef} />
         <SetPassDlg ref={this.dlgRef} />
         <MaterialTable
           icons={tableIcons}
@@ -217,7 +224,7 @@ class AdmPorgMgmt extends Component {
               icon: Lock,
               tooltip: '设置密码',
               onClick: (event, proforg) => {
-                console.log(proforg);
+                log(proforg);
                 this.dlgRef.current.handleOpen(true, proforg.uid);
               }
             })

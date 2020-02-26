@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
 import {getUid, extractXAuthToken, tokensToHeaders, tokensToHeadersMultiPart, withPageAndCount, SessionKeys } from '../context/SessionContext';
+import {log} from '../utils/Util';
 
 export default class DataSrcDS {
   constructor(baseUrl, error401Handler, errorUnkHandler) {
@@ -15,14 +16,14 @@ export default class DataSrcDS {
     if (error.response) {
       // // The request was made and the server responded with a status code
       // // that falls out of the range of 2xx
-      // console.log(error.response.data);
-      // console.log(error.response.status);
-      // console.log(error.response.headers);
+      // log(error.response.data);
+      // log(error.response.status);
+      // log(error.response.headers);
       if (error.response.status === 401) {
         this.error401Handler();
       }
       else {
-        console.log(`Unhandled status code: ${error.response.status}`);
+        log(`Unhandled status code: ${error.response.status}`);
         if (this.errorUnkHandler) {
           this.errorUnkHandler(error.response.status, error);
         }
@@ -31,12 +32,12 @@ export default class DataSrcDS {
       // The request was made but no response was received
       // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
       // http.ClientRequest in node.js
-      console.log(error.request);
+      log(error.request);
     } else {
       // Something happened in setting up the request that triggered an Error
-      console.log('Error', error);
+      log('Error', error);
     }
-    console.log(error.config);
+    log(error.config);
   }
 
   multiPostTkr = async (dataUrlCallbacks, _traceTag) => {
@@ -45,7 +46,7 @@ export default class DataSrcDS {
     const reqs = dataUrlCallbacks.map(duc => {
       const {data, method, url} = duc;
       const m = method || 'POST';
-      // console.log('method: ', m);
+      // log('method: ', m);
       const options = {
         method: m,
         headers,
@@ -60,13 +61,13 @@ export default class DataSrcDS {
 
     return Axios.all(reqs)
       .then(Axios.spread((...responses) => {
-        console.log(`[${traceTag}] responses: `, responses);
+        log(`[${traceTag}] responses: `, responses);
         return responses.map((response, index) => {
-          console.log(`[${traceTag}] response[${index}]: `, response);
+          log(`[${traceTag}] response[${index}]: `, response);
           var xauth = extractXAuthToken(response);
           if (xauth) {
             sessionStorage.setItem(SessionKeys.xauthTokenKey, xauth);
-            console.log('x-auth token saved session: ', xauth);
+            log('x-auth token saved session: ', xauth);
           }
     
           const data = response.data;
@@ -97,11 +98,11 @@ export default class DataSrcDS {
   
     return Axios(options)
       .then(response => {
-        console.log('response: ', response);
+        log('response: ', response);
         var xauth = extractXAuthToken(response);
         if (xauth) {
           sessionStorage.setItem(SessionKeys.xauthTokenKey, xauth);
-          console.log('x-auth token saved session: ', xauth);
+          log('x-auth token saved session: ', xauth);
         }
   
         let data = response.data;
@@ -136,7 +137,7 @@ export default class DataSrcDS {
   
     return Axios(options)
       .then(result => {
-        console.log('result:', result);
+        log('result:', result);
         let res = cb(result);
         return res;
       })
@@ -208,7 +209,7 @@ export default class DataSrcDS {
         data: {proforgId},
         url: '/api/getRewardPlansByProfOrg',
         callback: plans => {
-          console.log('plans: ', plans);
+          log('plans: ', plans);
           return withPageAndCount('rewardPlans', plans);
         }
       },
@@ -217,7 +218,7 @@ export default class DataSrcDS {
         url: '/proforg/allApprovedProducts',
         callback: resp => {
           let x = withPageAndCount('products', resp);
-          console.log('resp: ', x, resp);
+          log('resp: ', x, resp);
           return x;
         }
       }],
@@ -255,7 +256,7 @@ export default class DataSrcDS {
     data: {uid},
     url: url,
     callback: orders => {
-      console.log('orders: ', orders);
+      log('orders: ', orders);
       return withPageAndCount('orders', orders);
     }
   })
@@ -288,19 +289,19 @@ export default class DataSrcDS {
 
   doLogin = async (userpass, callback) => {
     //let {user, pass} = userpass;
-    // console.log('in doLogin', user, pass);
+    // log('in doLogin', user, pass);
     return this.doPost(
       userpass,
       '/api/login',
       resp => {
-        console.log('login resp:', resp);
+        log('login resp:', resp);
         let { oauth2, uid, userType } = resp;
 
         sessionStorage.setItem(SessionKeys.uidKey, uid);
         sessionStorage.setItem(SessionKeys.accessTokenKey, oauth2.access_token);
         // let t = sessionStorage.getItem(DataSrc.SessionKeys.accessTokenKey);
         // sessionStorage.setItem('userType', userType);
-        console.log('login ok: ', userType, oauth2);
+        log('login ok: ', userType, oauth2);
 
         callback(resp);
       }
@@ -338,7 +339,7 @@ export default class DataSrcDS {
       applId,
       '/admin/approveSalesApplications',
       resp => {
-        console.log('application approval resp: ', resp);
+        log('application approval resp: ', resp);
         cb(resp);
       }
     )

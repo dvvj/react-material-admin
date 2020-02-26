@@ -9,6 +9,8 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Container from '@material-ui/core/Container';
 import SnackbarUtil from '../XgSnackBarUtil/SnackbarUtil';
 
+import {log} from '../../utils/Util';
+
 class SetPassDlg extends Component {
   constructor(props) {
     super(props);
@@ -38,10 +40,10 @@ class SetPassDlg extends Component {
   close = () => this.handleOpen(false, null);
 
   handleInputChange = (event, errorText) => {
-    console.log('event: ', event);
+    log('event: ', event);
     let name = event.target.name;
     let passwords = { ...this.state.passwords, [name]: event.target.value };
-    console.log('updated passwords: ', passwords);
+    log('updated passwords: ', passwords);
     let errorTexts = this.state.errorTexts;
     errorTexts[name] = errorText;
     this.setState({ passwords, errorTexts });
@@ -74,13 +76,13 @@ class SetPassDlg extends Component {
         proforgId: state.proforgId,
         password: state.passwords.pass1
       }, resp => {
-        console.log('setPass resp: ', resp);
+        log('setPass resp: ', resp);
 
         this.sbarRef.current.show(resp, '密码设置成功');
         //this.sbarRef.current.show({success: false, 'msg': 'failed'}, '密码设置成功');
         this.close();
       });
-    //console.log('setPass t:', t);
+    //log('setPass t:', t);
   }
 
   render() {

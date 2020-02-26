@@ -32,6 +32,7 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import DataSrcDS from '../../data/DataSrcDS';
 import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
+import {log} from '../../utils/Util';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -68,7 +69,7 @@ class SharedOrderTable extends Component {
 
         this.dataSrc = new DataSrcDS(
             () => {
-                console.log('OrderList error handler');
+                log('OrderList error handler');
             },
             (status, errorText) => {
                 this.sbarRef.current.err(`未知错误:${status}, ${errorText}`);
@@ -94,23 +95,23 @@ class SharedOrderTable extends Component {
 
         //let t = await DataSrc.SysAdmin.getOrdersInitial();
         const t = await this.dataSrc.orderListReq();
-        console.log('t: ', t);
+        log('t: ', t);
 
         let prodMap = { };
         let prodNameMap = { };
         t[1].data.products.forEach(prod => {
-            // console.log('prod: ', prod);
+            // log('prod: ', prod);
             prodMap[prod.product.id] = prod;
             prodNameMap[prod.product.id] = prod.product.name;
         });
-        console.log('prodMap: ', prodMap, prodNameMap);
+        log('prodMap: ', prodMap, prodNameMap);
         this.setState({prodMap, prodNameMap});
 
         this.processOrderResult(t[0], prodMap);
     }
 
     processOrderResult = (orderResp, prodMap) => {
-        console.log('orderResp: ', orderResp);
+        log('orderResp: ', orderResp);
         const { page, orders, totalCount } = orderResp.data;
         orders.forEach(order => {
             order.payTime = this.formatDate(order.payTime);
@@ -122,7 +123,7 @@ class SharedOrderTable extends Component {
 
     timeRangeChange = async e => {
         const newRange = e.target.value;
-        console.log('newRange: ', newRange);
+        log('newRange: ', newRange);
         // this.getExportCsvFileName();
 
         var orderResp;
@@ -145,7 +146,7 @@ class SharedOrderTable extends Component {
     }
 
     onChangeRowsPerPage = e => {
-        console.log('onChangeRowsPerPage: ', e);
+        log('onChangeRowsPerPage: ', e);
         this.setState({pageSize: e});
     }
 
@@ -153,7 +154,7 @@ class SharedOrderTable extends Component {
         let nowStr = new Date().toLocaleString('en-US', { timeZone: 'Asia/Shanghai' });
         let isoStr = new Date(nowStr).toISOString().substring(0, 19);
         let res = isoStr.replace(/:/g, '') + `-${this.state.timeRangeFilter}`;
-        console.log('datetime str: ', res);
+        log('datetime str: ', res);
         return res;
     }
 

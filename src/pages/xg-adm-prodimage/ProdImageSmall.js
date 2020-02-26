@@ -2,6 +2,7 @@ import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dropzone from 'react-dropzone';
 import {tokensToHeadersMultiPart } from '../../context/SessionContext';
+import {log} from '../../utils/Util';
 
 const useStyles = makeStyles({
   card: {
@@ -34,9 +35,9 @@ export default function ProdImageSmall(props) {
   });
 
   const onDropFiles = files => {
-    console.log('files: ', files);
+    log('files: ', files);
     if (files.length != 1) {
-      console.log('error: file count != 1');
+      log('error: file count != 1');
     }
     else {
       const formData = new FormData();
@@ -45,7 +46,7 @@ export default function ProdImageSmall(props) {
       formData.append('productId', productId);
       const headers = tokensToHeadersMultiPart();
 
-      console.log('headers: ', headers, formData);
+      log('headers: ', headers, formData);
 
       fetch('/api/newProductAsset', {
         method: 'post',
@@ -60,12 +61,12 @@ export default function ProdImageSmall(props) {
         return res.json()
       })
       .then(resp => {
-        console.log('resp: ', resp);
+        log('resp: ', resp);
         setState({ imgUrl: resp.fileDownloadUri });
       })
       .catch(err => {
         err.json().then(e => {
-          console.log('error: ', e);
+          log('error: ', e);
         })
       })
     }

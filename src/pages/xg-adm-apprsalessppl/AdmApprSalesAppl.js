@@ -23,6 +23,7 @@ import Container from '@material-ui/core/Container';
 
 import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
 import DataSrcDS from '../../data/DataSrcDS';
+import {log} from '../../utils/Util';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -60,7 +61,7 @@ class AdmApprSalesAppl extends Component {
     this.sbarRef = React.createRef();
 
     this.dataSrc = new DataSrcDS(
-      () => console.log('AdminProdMgmt error handler todo')
+      () => log('AdminProdMgmt error handler todo')
     );
   };
 
@@ -73,14 +74,14 @@ class AdmApprSalesAppl extends Component {
   async componentDidMount() {
 
     let t = await this.dataSrc.getProdApplApprovalInfo();
-    console.log('t:', t);
+    log('t:', t);
 
     let prods = t[1].data;
     let prodMap = {};
     prods.products.forEach(p => prodMap[p.product.id] = p.product);
 
     let appData = t[0].data;
-    console.log('applications:', appData, prodMap);
+    log('applications:', appData, prodMap);
     const { page, applications, totalCount } = appData;
     applications.forEach(app => {
         app[Columns.ProductName] = prodMap[app.productId].name;
@@ -107,11 +108,11 @@ class AdmApprSalesAppl extends Component {
 
   onApprove = (e, row) => {
     let applId = row.id;
-    console.log('approved: ', applId);
+    log('approved: ', applId);
     this.dataSrc.approveSalesApplication(
       applId,
       opResp => {
-        console.log('opResp', opResp);
+        log('opResp', opResp);
         const {productName, orgId} = this._getAppl(applId);
         this.sbarRef.current.showOpResp(opResp, `医药公司【${orgId}】销售药品【${productName}】申请审批通过`);
         this._removeAppl(applId);

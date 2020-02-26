@@ -28,6 +28,7 @@ import ApplyMedSalesDlg from '../xg-adm-applysalesdlg/ApplyMedSalesDlg';
 import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
 
 import { withStyles } from '@material-ui/core/styles';
+import {log} from '../../utils/Util';
 
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
@@ -64,7 +65,7 @@ class AdmProdTable extends Component {
     this.sbarRef = React.createRef();
 
     this.dataSrc = new DataSrcDS(
-      () => console.log('AdminProdMgmt error handler todo')
+      () => log('AdminProdMgmt error handler todo')
     );
   };
 
@@ -87,14 +88,14 @@ class AdmProdTable extends Component {
     
     let t = t0[0];
 
-    console.log('products t:', t, t.xauthToken);
+    log('products t:', t, t.xauthToken);
     const { page, products, totalCount } = t.data;
 
     // let existingApplications = t0[2].data.obj;
-    // console.log('existingApplications:', existingApplications);
+    // log('existingApplications:', existingApplications);
     // let applicationMap = { };
     // existingApplications.forEach(a => applicationMap[a.productId] = a.isApproved);
-    // console.log('applicationMap:', applicationMap);
+    // log('applicationMap:', applicationMap);
     // products.forEach(p => p.status = applicationMap[p.product.id]);
 
     this.setState({ page, products, totalCount });
@@ -103,7 +104,7 @@ class AdmProdTable extends Component {
   onRowAdd = newProdData =>
     new Promise(resolve => {
       const uid = this.dataSrc.getUid(); //this.getProfOrgId(); //
-      console.log('getItem from session', uid);
+      log('getItem from session', uid);
       const prod = {
         id: null,
         ...newProdData.product,
@@ -115,7 +116,7 @@ class AdmProdTable extends Component {
       this.dataSrc.newProduct(
         prod, newProdResp => {
           resolve();
-          console.log('newProdResp: ', newProdResp);
+          log('newProdResp: ', newProdResp);
           this.sbarRef.current.showOpResp(newProdResp, '添加成功');
           if (newProdResp.success) {
             const newProd = newProdResp.obj;
@@ -160,14 +161,14 @@ class AdmProdTable extends Component {
       info
     };
     const req = { salesApp };
-    console.log('in onSubmitApply', req);
+    log('in onSubmitApply', req);
 
     this.dataSrc.submitProductSalesApplication(
       req,
       opResp => {
         this.sbarRef.current.showOpResp(opResp, '申请已成功提交');
         this.setState({openApplyDlg: false});
-        //console.log('onSubmitApply todo:', resp);
+        //log('onSubmitApply todo:', resp);
       }
     )
   }

@@ -26,6 +26,7 @@ import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
 import ApplyMedSalesDlg from '../xg-adm-applysalesdlg/ApplyMedSalesDlg';
 
 import {getUid} from '../../context/SessionContext';
+import {log} from '../../utils/Util';
 
 const tableIcons = {
     ApplySales: forwardRef((props, ref) => <PlaylistAddCheck {...props} ref={ref} />),
@@ -56,7 +57,7 @@ class ProfOrgProdTable extends Component {
     this.sbarRef = React.createRef();
 
     this.dataSrc = new DataSrcDS(
-      () => console.log('ProdMgmt error handler todo')
+      () => log('ProdMgmt error handler todo')
     );
   };
 
@@ -78,26 +79,26 @@ class ProfOrgProdTable extends Component {
   async componentDidMount() {
 
     let t0 = await this.dataSrc.prodMgmtReq(this.getProfOrgId());
-    console.log('all t0:', t0);
+    log('all t0:', t0);
 
     let t = t0[0];
 
     const { page, products, totalCount } = t.data;
 
     let commissionRates = t0[1].data;
-    console.log('commissionRates:', commissionRates);
+    log('commissionRates:', commissionRates);
 
     let defaultCommissionRates = {};
     commissionRates.forEach(c => {
       defaultCommissionRates[c.productId] = c.rate;
     });
-    console.log('default product commission rate:', defaultCommissionRates);
+    log('default product commission rate:', defaultCommissionRates);
 
     let existingApplications = t0[2].data;
-    console.log('existingApplications:', existingApplications);
+    log('existingApplications:', existingApplications);
     let applicationMap = { };
     existingApplications.forEach(a => applicationMap[a.productId] = a.isApproved);
-    console.log('applicationMap:', applicationMap);
+    log('applicationMap:', applicationMap);
     products.forEach(p => p.status = applicationMap[p.product.id]);
 
     this.setState({ page, products, totalCount, defaultCommissionRates });
@@ -122,7 +123,7 @@ class ProfOrgProdTable extends Component {
       info
     };
     //const req = { salesApp };
-    console.log('in onSubmitApply', salesApp);
+    log('in onSubmitApply', salesApp);
 
     this.dataSrc.submitProductSalesApplication(
       salesApp,
@@ -130,7 +131,7 @@ class ProfOrgProdTable extends Component {
         this.sbarRef.current.showOpResp(opResp, '申请已成功提交');
         this.setState({openApplyDlg: false});
         this._updateApplStatus(productId);
-        //console.log('onSubmitApply todo:', resp);
+        //log('onSubmitApply todo:', resp);
       }
     )
   }
@@ -140,7 +141,7 @@ class ProfOrgProdTable extends Component {
     products.forEach(prod => {
       if (prod.product.id === prodId) {
         prod.status = 'N';
-        console.log('[todo] updated: ', prod.product)
+        log('[todo] updated: ', prod.product)
       }
     });
     this.setState({ products });
@@ -204,7 +205,7 @@ class ProfOrgProdTable extends Component {
                 let prodId = row.product.id;
                 let prodName = row.product.name;
                 let applyDlgCommissionRate = this.state.defaultCommissionRates[row.product.id];
-                //console.log(applyDlgCommissionRates);
+                //log(applyDlgCommissionRates);
                 this.onApplySales(prodId, prodName, applyDlgCommissionRate);
               }
             })

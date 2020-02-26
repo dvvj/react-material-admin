@@ -1,3 +1,5 @@
+import {log} from '../utils/Util';
+
 const SessionKeys = {
   accessTokenKey: 'accessToken',
   xauthTokenKey: 'xauthToken',
@@ -39,13 +41,13 @@ const withPageAndCount = (entityName, entities) => {
 const extractXAuthToken = response => {
   var xauth = null;
   for(let entry in response.headers) {
-    //console.log(entry, response.headers[entry]);
+    //log(entry, response.headers[entry]);
     //if (entry[0] === 'x-auth-token')
     //  xauth = entry[1];
     if (entry === 'x-auth-token')
       xauth = response.headers[entry];
   }
-  console.log('xauth: ', xauth);
+  log('xauth: ', xauth);
   return xauth;
 };
 

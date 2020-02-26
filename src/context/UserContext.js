@@ -1,6 +1,7 @@
 import React from "react";
 import DataSrcDS from "../data/DataSrcDS";
 import RouteConsts from "../components/RouteConsts";
+import {log} from '../utils/Util';
 
 var UserStateContext = React.createContext();
 var UserDispatchContext = React.createContext();
@@ -63,11 +64,11 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   const dataSrc = new DataSrcDS(
     "https://localhost:20433",
     () => {
-      console.log('401 error');
+      log('401 error');
       loginFail("401");
     },
     (status, error) => {
-      console.log('error', error);
+      log('error', error);
       loginFail(error);
     }
   );
@@ -80,7 +81,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
     dataSrc.doLogin(
       userpass,
       resp => {
-        console.log("login resp: ", resp);
+        log("login resp: ", resp);
 
         // test login resp:
         localStorage.setItem('id_token', 1)
@@ -92,7 +93,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
       },
       err => {
           let errMsg = `登录失败（${err.status}:${err.statusText}）`;
-          console.log(errMsg);
+          log(errMsg);
           setError(errMsg)
           //this.sbarRef.current.err(errMsg);
       }
