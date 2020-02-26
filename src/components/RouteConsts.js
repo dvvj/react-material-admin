@@ -14,6 +14,10 @@ const RouteConsts = {
   SalesApplApprTable: {
     link: "/app/admin-sales-appl-table",
     label: "销售申请审批"
+  },
+  PorgMgmt: {
+    link: "/app/admin-porg-mgmt",
+    label: "医药公司管理"
   }
 };
 

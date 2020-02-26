@@ -343,6 +343,18 @@ export default class DataSrcDS {
       }
     )
   }
+
+  newProfOrg = (data, cb) => {
+    return this.doPostTkr(data, '/api/newProfOrg', cb);
+  }
+
+  updateProfOrg = (data, cb) => {
+    return this.doPostTkr(data, '/api/updateProfOrg', cb);
+  }
+
+  setProfOrgPass = (passData, cb) => {
+    return this.doPostTkr(passData, '/api/setProfOrgPass', cb);
+  }
 };
 
 //export default DataSrcDS;

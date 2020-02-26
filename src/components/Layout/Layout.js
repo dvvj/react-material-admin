@@ -30,6 +30,7 @@ import AdmProdTable from "../../pages/xg-adm-prodtable/AdmProdTable";
 import SharedOrderTable from "../../pages/xg-shared-ordertable/SharedOrderTable";
 import ProfOrgProdTable from "../../pages/xg-porg-prodtable/ProfOrgProdTable";
 import AdmApprSalesAppl from "../../pages/xg-adm-apprsalessppl/AdmApprSalesAppl";
+import AdmPorgMgmt from "../../pages/xg-adm-porgmgmt/AdmPorgMgmt";
 
 function Layout(props) {
   var classes = useStyles();
@@ -57,14 +58,15 @@ function Layout(props) {
               <Route path={RouteConsts.PorgProdTable.link} component={ProfOrgProdTable} />
               {/* <Route path="/app/notifications" component={Notifications} /> */}
               <Route path={RouteConsts.SalesApplApprTable.link} component={AdmApprSalesAppl} />
-              <Route
+              <Route path={RouteConsts.PorgMgmt.link} component={AdmPorgMgmt} />
+              {/* <Route
                 exact
                 path="/app/ui"
                 render={() => <Redirect to="/app/ui/icons" />}
               />
               <Route path="/app/ui/maps" component={Maps} />
               <Route path="/app/ui/icons" component={Icons} />
-              <Route path="/app/ui/charts" component={Charts} />
+              <Route path="/app/ui/charts" component={Charts} /> */}
             </Switch>
           </div>
         </>
