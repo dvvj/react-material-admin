@@ -75,11 +75,11 @@ class AdmApprSalesAppl extends Component {
     let t = await this.dataSrc.getProdApplApprovalInfo();
     console.log('t:', t);
 
-    let prods = t[1];
+    let prods = t[1].data;
     let prodMap = {};
     prods.products.forEach(p => prodMap[p.product.id] = p.product);
 
-    let appData = t[0];
+    let appData = t[0].data;
     console.log('applications:', appData, prodMap);
     const { page, applications, totalCount } = appData;
     applications.forEach(app => {

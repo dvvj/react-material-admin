@@ -320,12 +320,12 @@ export default class DataSrcDS {
     //     DataSrc.getAllProducts()
     //   ]
     // )
-    this.multiPostTkr(
+    return this.multiPostTkr(
       [
         {
           url: '/admin/salesApplications',
           method: 'GET',
-          callback: resp => withPageAndCount('applications', resp)
+          callback: resp => withPageAndCount('applications', resp.obj)
         },
         this.requestConfigs.allProducts
       ],
