@@ -25,5 +25,13 @@ module.exports = function(app) {
       secure: false
     })
   );
+  app.use(
+    "/admin",
+    proxy({
+      target: "https://localhost:20443",
+      changeOrigin: true,
+      secure: false
+    })
+  );
 
 };

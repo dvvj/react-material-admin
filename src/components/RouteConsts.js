@@ -10,6 +10,10 @@ const RouteConsts = {
   OrderTable: {
     link: "/app/admin-order-table",
     label: "订单管理"
+  },
+  SalesApplApprTable: {
+    link: "/app/admin-sales-appl-table",
+    label: "销售申请审批"
   }
 };
 

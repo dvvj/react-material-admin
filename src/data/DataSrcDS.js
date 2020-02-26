@@ -306,6 +306,43 @@ export default class DataSrcDS {
       }
     );
   }
+
+  // getProdApplToApprove: () => {
+  //   return doGetTkr(
+  //     '/admin/salesApplications',
+  //     resp => withPageAndCount('applications', resp)
+  //   )
+  // }
+  getProdApplApprovalInfo = () => {
+    // return multiPosts(
+    //   [
+    //     DataSrc.SysAdmin.getProdApplToApprove(),
+    //     DataSrc.getAllProducts()
+    //   ]
+    // )
+    this.multiPostTkr(
+      [
+        {
+          url: '/admin/salesApplications',
+          method: 'GET',
+          callback: resp => withPageAndCount('applications', resp)
+        },
+        this.requestConfigs.allProducts
+      ],
+      'getProdApplApprovalInfo'
+    );
+  }
+
+  approveSalesApplication = (applId, cb) => {
+    return this.doPostTkr(
+      applId,
+      '/admin/approveSalesApplications',
+      resp => {
+        console.log('application approval resp: ', resp);
+        cb(resp);
+      }
+    )
+  }
 };
 
 //export default DataSrcDS;

@@ -32,18 +32,9 @@ import RouteConsts from "../RouteConsts";
 
 const structure = [
   { id: 0, label: RouteConsts.AdminProdTable.label, link: RouteConsts.AdminProdTable.link, icon: <HomeIcon /> },
-  {
-    id: 1,
-    label: RouteConsts.OrderTable.label, link: RouteConsts.OrderTable.link,
-    icon: <TypographyIcon />,
-  },
+  { id: 1, label: RouteConsts.OrderTable.label, link: RouteConsts.OrderTable.link, icon: <TypographyIcon /> },
   { id: 2, label: RouteConsts.PorgProdTable.label, link: RouteConsts.PorgProdTable.link, icon: <TableIcon /> },
-  {
-    id: 3,
-    label: "Notifications",
-    link: "/app/notifications",
-    icon: <NotificationsIcon />,
-  },
+  { id: 3, label: RouteConsts.SalesApplApprTable.label, link: RouteConsts.SalesApplApprTable.link, icon: <NotificationsIcon /> },
   {
     id: 4,
     label: "UI Elements",
