@@ -117,13 +117,16 @@ class AdmPorgMgmt extends Component {
       proforgReq,
       newOrgResp => {
         log('new ProfOrg: ', newOrgResp);
-        const proforgs = this.state.proforgs;
-        const { proforg, rewardPlanId } = newOrgResp.obj;
-        const proforgRow = {...proforg, rewardPlan: rewardPlanId};
-        //this.status.rewardPlanDescMap[rewardPlanId];
+        this.sbarRef.current.showOpResp(newOrgResp, '添加成功');
+        if (newOrgResp.success !== false) {
+          const proforgs = this.state.proforgs;
+          const { proforg, rewardPlanId } = newOrgResp.obj;
+          const proforgRow = {...proforg, rewardPlan: rewardPlanId};
+          //this.status.rewardPlanDescMap[rewardPlanId];
 
-        proforgs.push(proforgRow);
-        this.setProfOrgs(proforgs);
+          proforgs.push(proforgRow);
+          this.setProfOrgs(proforgs);
+        }
       }
     )
   }
