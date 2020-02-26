@@ -161,27 +161,27 @@ class AdmProdTable extends Component {
       }, 600);
     })
 
-  onCancelApply = () => this.setState({openApplyDlg: false})
+  // onCancelApply = () => this.setState({openApplyDlg: false})
 
-  onSubmitApply = (productId, commissionRate, info) => {
-    const salesApp = {
-      productId,
-      orgId: this.getProfOrgId(),
-      rate: commissionRate,
-      info
-    };
-    const req = { salesApp };
-    log('in onSubmitApply', req);
+  // onSubmitApply = (productId, commissionRate, info) => {
+  //   const salesApp = {
+  //     productId,
+  //     orgId: this.getProfOrgId(),
+  //     rate: commissionRate,
+  //     info
+  //   };
+  //   const req = { salesApp };
+  //   log('in onSubmitApply', req);
 
-    this.dataSrc.submitProductSalesApplication(
-      req,
-      opResp => {
-        this.sbarRef.current.showOpResp(opResp, '申请已成功提交');
-        this.setState({openApplyDlg: false});
-        //log('onSubmitApply todo:', resp);
-      }
-    )
-  }
+  //   this.dataSrc.submitProductSalesApplication(
+  //     req,
+  //     opResp => {
+  //       this.sbarRef.current.showOpResp(opResp, '申请已成功提交');
+  //       this.setState({openApplyDlg: false});
+  //       //log('onSubmitApply todo:', resp);
+  //     }
+  //   )
+  // }
 
   render() {
     //const state = this.state;

@@ -73,7 +73,8 @@ export default class DataSrcDS {
     
           const data = response.data;
           const callback = dataUrlCallbacks[index].callback;
-          const res = callback(data);
+
+          const res = callback ? callback(data) : data;
           return({data: res, xauth});  
         });
       })).catch(err => {
@@ -356,6 +357,56 @@ export default class DataSrcDS {
 
   setProfOrgPass = (passData, cb) => {
     return this.doPostTkr(passData, '/api/setProfOrgPass', cb);
+  }
+
+  submitProductSalesApplication = (req, cb) => {
+    return this.doPostTkr(
+      req, '/proforg/submitProductSalesApplication',
+      cb
+    );
+  }
+
+  getAgentTreeAndStat = (uid, cb) => {
+    return this.multiPostTkr(
+      [
+        {
+          data: {uid},
+          url: '/api/agentTree'
+          //callback: cb
+        },
+        {
+          data: {uid},
+          url: '/api/userStats'
+        }
+      ]
+    );
+  }
+
+  getCurrUserStat = () => {
+    const uid = getUid();
+    return this.doPostTkr(
+      {
+        data: {uid},
+        url: '/api/userStats'
+      }
+    );
+  }
+
+  getOrgTreeAndStat = () => {
+    const uid = getUid();
+    return this.multiPostTkr(
+      [
+        {
+          data: {uid},
+          url: '/api/orgTreeAgents'
+          //callback: cb
+        },
+        {
+          data: {uid},
+          url: '/api/userStats'
+        }
+      ]
+    );
   }
 };
 

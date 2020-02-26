@@ -36,6 +36,7 @@ const structure = [
   { id: 2, label: RouteConsts.PorgProdTable.label, link: RouteConsts.PorgProdTable.link, icon: <TableIcon /> },
   { id: 3, label: RouteConsts.SalesApplApprTable.label, link: RouteConsts.SalesApplApprTable.link, icon: <NotificationsIcon /> },
   { id: 4, label: RouteConsts.PorgMgmt.label, link: RouteConsts.PorgMgmt.link, icon: <NotificationsIcon /> },
+  { id: 5, label: RouteConsts.PorgSalesNtwk.label, link: RouteConsts.PorgSalesNtwk.link, icon: <NotificationsIcon /> },
   // {
   //   id: 4,
   //   label: "UI Elements",
@@ -47,7 +48,7 @@ const structure = [
   //     { label: "Maps", link: "/app/ui/maps" },
   //   ],
   // },
-  { id: 5, type: "divider" },
+  // { id: 5, type: "divider" },
   { id: 6, type: "title", label: "HELP" },
   { id: 7, label: "Library", link: "", icon: <LibraryIcon /> },
   { id: 8, label: "Support", link: "", icon: <SupportIcon /> },

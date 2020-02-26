@@ -52,7 +52,8 @@ function useUserDispatch() {
 
 export {
   UserDispatchContext, UserProvider, useUserState, useUserDispatch, loginUser, signOut,
-  getUid, extractXAuthToken, tokensToHeaders, tokensToHeadersMultiPart, withPageAndCount, SessionKeys
+  getUid, extractXAuthToken, tokensToHeaders, tokensToHeadersMultiPart, withPageAndCount, SessionKeys,
+  uid2Type, UserTypes
 };
 
 // ###########################################################
@@ -125,6 +126,56 @@ function signOut(dispatch, history) {
 }
 
 // ######################################
+
+const uid2Type = uid => {
+  if (uid.startsWith("c-")) {
+    return UserTypes.Customer.text;
+  }
+  else if (uid.startsWith("p-")) {
+    return UserTypes.MedProf.text;
+  }
+  else if (uid.startsWith("a-")) {
+    return UserTypes.ProfOrgAgent.text;
+  }
+  else if (uid.startsWith("o-")) {
+    return UserTypes.ProfOrg.text;
+  }
+  else if (uid.startsWith("s-")) {
+    return UserTypes.SysAdmin.text;
+  }
+  else {
+    throw new Error("unknown user type: " + uid);
+  }
+}
+
+const UserTypes = {
+  ProfOrg: {
+    text: 'ProfOrg',
+    displayText: '医药公司',
+    loginOkPage: '/prod-mgmt'
+  },
+  SysAdmin: {
+    text: 'SysAdmin',
+    displayText: '系统管理员',
+    loginOkPage: '/proforg-mgmt'
+  },
+  ProfOrgAgent: {
+    text: 'ProfOrgAgent',
+    displayText: '业务员'
+  },
+  MedProf: {
+    text: 'MedProf',
+    displayText: '营养师'
+  },
+  Customer: {
+    text: 'Customer',
+    displayText: '顾客'
+  },
+
+  NotLoggedIn: {
+    text: 'NotLoggedIn',
+  }
+};
 
 const SessionKeys = {
   accessTokenKey: 'accessToken',

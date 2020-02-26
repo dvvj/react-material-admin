@@ -18,6 +18,10 @@ const RouteConsts = {
   PorgMgmt: {
     link: "/app/admin-porg-mgmt",
     label: "医药公司管理"
+  },
+  PorgSalesNtwk: {
+    link: "/app/porg-sales-ntwk",
+    label: "销售网络"
   }
 };
 

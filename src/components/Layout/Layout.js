@@ -33,6 +33,7 @@ import AdmApprSalesAppl from "../../pages/xg-adm-apprsalessppl/AdmApprSalesAppl"
 import AdmPorgMgmt from "../../pages/xg-adm-porgmgmt/AdmPorgMgmt";
 
 import { UserDispatchContext } from '../../context/UserContext';
+import PorgSalesNtwk from "../../pages/xg-porg-orgtree/PorgSalesNtwk";
 
 function Layout(props) {
   var classes = useStyles();
@@ -59,12 +60,13 @@ function Layout(props) {
               {/* <Route path="/app/dashboard" component={Dashboard} /> */}
               <Route path={RouteConsts.AdminProdTable.link} component={() => <AdmProdTable userDispatch={userDispatch} history={props.history} />} />
               {/* <Route path="/app/typography" component={Typography} /> */}
-              <Route path={RouteConsts.OrderTable.link} component={SharedOrderTable} userDispatch={userDispatch} history={props.history} />
+              <Route path={RouteConsts.OrderTable.link} component={() => <SharedOrderTable userDispatch={userDispatch} history={props.history} />} />
               {/* <Route path="/app/tables" component={Tables} /> */}
-              <Route path={RouteConsts.PorgProdTable.link} component={ProfOrgProdTable} userDispatch={userDispatch} history={props.history} />
+              <Route path={RouteConsts.PorgProdTable.link} component={() => <ProfOrgProdTable userDispatch={userDispatch} history={props.history} />} />
               {/* <Route path="/app/notifications" component={Notifications} /> */}
-              <Route path={RouteConsts.SalesApplApprTable.link} component={AdmApprSalesAppl} userDispatch={userDispatch} history={props.history} />
-              <Route path={RouteConsts.PorgMgmt.link} component={AdmPorgMgmt} userDispatch={userDispatch} history={props.history} />
+              <Route path={RouteConsts.SalesApplApprTable.link} component={() => <AdmApprSalesAppl userDispatch={userDispatch} history={props.history} />} />
+              <Route path={RouteConsts.PorgMgmt.link} component={() => <AdmPorgMgmt userDispatch={userDispatch} history={props.history} />} />
+              <Route path={RouteConsts.PorgSalesNtwk.link} component={() => <PorgSalesNtwk userDispatch={userDispatch} history={props.history} />} />
               {/* <Route
                 exact
                 path="/app/ui"
