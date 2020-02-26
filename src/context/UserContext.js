@@ -10,6 +10,8 @@ function userReducer(state, action) {
   switch (action.type) {
     case "LOGIN_SUCCESS":
       return { ...state, isAuthenticated: true };
+    case "LOGIN_REQUIRED":
+      return { ...state, isAuthenticated: false };
     case "SIGN_OUT_SUCCESS":
       return { ...state, isAuthenticated: false };
     default: {
@@ -48,7 +50,10 @@ function useUserDispatch() {
   return context;
 }
 
-export { UserProvider, useUserState, useUserDispatch, loginUser, signOut };
+export {
+  UserProvider, useUserState, useUserDispatch, loginUser, signOut,
+  getUid, extractXAuthToken, tokensToHeaders, tokensToHeadersMultiPart, withPageAndCount, SessionKeys
+};
 
 // ###########################################################
 
@@ -62,7 +67,7 @@ function loginUser(dispatch, login, password, history, setIsLoading, setError) {
   setIsLoading(true);
 
   const dataSrc = new DataSrcDS(
-    "https://localhost:20433",
+    history,
     () => {
       log('401 error');
       loginFail("401");
@@ -118,3 +123,65 @@ function signOut(dispatch, history) {
   dispatch({ type: "SIGN_OUT_SUCCESS" });
   history.push("/login");
 }
+
+// ######################################
+
+const SessionKeys = {
+  accessTokenKey: 'accessToken',
+  xauthTokenKey: 'xauthToken',
+  userTypeKey: 'userType',
+  uidKey: '_uid_'
+};
+
+const _tokensToHeaders = (contentType, history) => {
+  let accessToken = sessionStorage.getItem(SessionKeys.accessTokenKey);
+  if (!accessToken) {
+    log('no access token found!');
+    throw Error ('no access token found!');
+    // const dispatch = useUserDispatch();
+    // dispatch({ type: "LOGIN_REQUIRED" });
+    // history.push("/login");
+    // return {};
+  }
+  var headers = { 'Authorization': `Bearer ${accessToken}` };
+  if (contentType) headers['Content-Type'] = contentType;
+
+  let xauth = sessionStorage.getItem(SessionKeys.xauthTokenKey);
+  if (xauth) {
+    headers['X-Auth-Token'] = xauth;
+  }
+  return headers;
+};
+  
+const tokensToHeadersMultiPart = (history) => {
+  return _tokensToHeaders(null, history);
+};
+const tokensToHeaders = (history) => {
+  return _tokensToHeaders('application/json', history);
+};
+
+const withPageAndCount = (entityName, entities) => {
+  let res = {
+    page: 0,
+    totalCount: entities.length
+  };
+  res[entityName] = entities;
+  return res;
+};
+
+const extractXAuthToken = response => {
+  var xauth = null;
+  for(let entry in response.headers) {
+    //log(entry, response.headers[entry]);
+    //if (entry[0] === 'x-auth-token')
+    //  xauth = entry[1];
+    if (entry === 'x-auth-token')
+      xauth = response.headers[entry];
+  }
+  log('xauth: ', xauth);
+  return xauth;
+};
+
+const getUid = () => {
+  return sessionStorage.getItem(SessionKeys.uidKey);
+};

@@ -1,7 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Dropzone from 'react-dropzone';
-import {tokensToHeadersMultiPart } from '../../context/SessionContext';
+import {tokensToHeadersMultiPart } from '../../context/UserContext';
 import {log} from '../../utils/Util';
 
 const useStyles = makeStyles({

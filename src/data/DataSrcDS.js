@@ -1,11 +1,12 @@
 import Axios from 'axios';
 
-import {getUid, extractXAuthToken, tokensToHeaders, tokensToHeadersMultiPart, withPageAndCount, SessionKeys } from '../context/SessionContext';
+import {getUid, extractXAuthToken, tokensToHeaders, tokensToHeadersMultiPart, withPageAndCount, SessionKeys, useUserDispatch } from '../context/UserContext';
 import {log} from '../utils/Util';
 
 export default class DataSrcDS {
-  constructor(baseUrl, error401Handler, errorUnkHandler) {
-    this.baseUrl = baseUrl;
+  constructor(history, error401Handler, errorUnkHandler) {
+    //this.userDispatch = useUserDispatch();
+    this.history = history;
     this.error401Handler = error401Handler;
     this.errorUnkHandler = errorUnkHandler;
   }
@@ -41,7 +42,7 @@ export default class DataSrcDS {
   }
 
   multiPostTkr = async (dataUrlCallbacks, _traceTag) => {
-    let headers = tokensToHeaders();
+    let headers = tokensToHeaders(this.history, this.userDispatch);
 
     const reqs = dataUrlCallbacks.map(duc => {
       const {data, method, url} = duc;
@@ -92,7 +93,7 @@ export default class DataSrcDS {
     };
 
     if (addTokens) {
-      const headers = tokensToHeaders();
+      const headers = tokensToHeaders(this.history, this.userDispatch);
       options['headers'] = headers;
     }
   
@@ -128,7 +129,7 @@ export default class DataSrcDS {
   }
 
   doGetTkr = async (url, cb) => {
-    let headers = tokensToHeaders();
+    let headers = tokensToHeaders(this.history, this.userDispatch);
     const options = {
       method: 'GET',
       headers,

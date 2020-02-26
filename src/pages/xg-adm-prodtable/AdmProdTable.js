@@ -65,6 +65,7 @@ class AdmProdTable extends Component {
     this.sbarRef = React.createRef();
 
     this.dataSrc = new DataSrcDS(
+      props.history,
       () => log('AdminProdMgmt error handler todo')
     );
   };

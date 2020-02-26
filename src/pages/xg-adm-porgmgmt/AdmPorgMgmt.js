@@ -58,6 +58,7 @@ class AdmPorgMgmt extends Component {
     this.sbarRef = React.createRef();
 
     this.dataSrc = new DataSrcDS(
+      props.history,
       () => log('ProfOrgMgmt error handler todo')
     );
   };

@@ -25,7 +25,7 @@ import DataSrcDS from '../../data/DataSrcDS';
 import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
 import ApplyMedSalesDlg from '../xg-adm-applysalesdlg/ApplyMedSalesDlg';
 
-import {getUid} from '../../context/SessionContext';
+import {getUid} from '../../context/UserContext';
 import {log} from '../../utils/Util';
 
 const tableIcons = {
@@ -57,6 +57,7 @@ class ProfOrgProdTable extends Component {
     this.sbarRef = React.createRef();
 
     this.dataSrc = new DataSrcDS(
+      props.history,
       () => log('ProdMgmt error handler todo')
     );
   };
