@@ -30,6 +30,7 @@ import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
 import { withStyles } from '@material-ui/core/styles';
 import {log} from '../../utils/Util';
 
+
 const tableIcons = {
     Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
     Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
@@ -58,15 +59,23 @@ const styles = {
   }
 };
 
+//const userDispatch = useUserDispatch();
+
 class AdmProdTable extends Component {
   constructor(props) {
     super(props);
     this.tableRef = React.createRef();
     this.sbarRef = React.createRef();
 
+    this.userDispatch = props.userDispatch;
+
     this.dataSrc = new DataSrcDS(
+      props.userDispatch,
       props.history,
-      () => log('AdminProdMgmt error handler todo')
+      () => {
+        log('AdminProdMgmt error handler todo');
+        //log(userDispatch);
+      }
     );
   };
 
@@ -179,62 +188,64 @@ class AdmProdTable extends Component {
     const { classes } = this.props;
     return (
 
-      <Container className={classes.container}>
-        <SnackbarUtil ref={this.sbarRef} />
-        <ApplyMedSalesDlg
-          open={this.state.openApplyDlg}
-          productId={this.state.applyDlgProductId}
-          productName={this.state.applyDlgProductName}
-          commissionRate={this.state.applyDlgCommissionRate}
-          onCancel={this.onCancelApply}
-          onSubmit={this.onSubmitApply}
-         />
+          <Container className={classes.container}>
+            {/* <div>Authenicated:: {`${this.userDispatch}`}</div> */}
+          <SnackbarUtil ref={this.sbarRef} />
+          <ApplyMedSalesDlg
+            open={this.state.openApplyDlg}
+            productId={this.state.applyDlgProductId}
+            productName={this.state.applyDlgProductName}
+            commissionRate={this.state.applyDlgCommissionRate}
+            onCancel={this.onCancelApply}
+            onSubmit={this.onSubmitApply}
+           />
+  
+          <MaterialTable
+            icons={tableIcons}
+            tableRef={this.tableRef}
+            title="产品列表"
+            columns={[
+              { title: '产品名', field: 'product.name' },
+              { title: '简称', field: 'product.shortName' },
+              { title: '零售价', field: 'product.price0', type: 'numeric' },
+              // {
+              //   title: '状态', field: 'status',
+              //   render: prod => prod.status !== undefined ? (
+              //     prod.status === 'Y' ?
+              //       <span style={{color: 'green'}}>审批通过</span> :
+              //       <span style={{color: 'blue'}}>审批中</span>
+              //   ) : <span style={{color: 'red'}}>未申请审批</span>
+              // },
+              {
+                title: '预览图',
+                field: 'imgUrl',
+                render: prodData =>
+                  <ProdImageSmall
+                    productId={prodData.product.id}
+                    imageUrlBase='/product'
+                    imgUrl0={prodData.assetItems.length == 0 ? '' : `/${prodData.product.id}/${prodData.assetItems[0].url}`}
+                    prodName={prodData.product.name} />
+              }
+            ]}
+            data={this.state.products}
+            // detailPanel={prodData => {
+            //   return (
+            //     <ProdImages
+            //       imgUrl={prodData.assetItems.length == 0 ? '#' : `/product/${prodData.product.id}/${prodData.assetItems[0].url}`}
+            //       prodName={prodData.product.name} />
+  
+            //   )
+            // }}
+            
+            // todo: disable editing for now
+            editable={{
+              onRowAdd: this.onRowAdd,
+              onRowUpdate: this.onRowUpdate,
+              onRowDelete: this.onRowDelete
+            }}
+          />
+        </Container>
 
-        <MaterialTable
-          icons={tableIcons}
-          tableRef={this.tableRef}
-          title="产品列表"
-          columns={[
-            { title: '产品名', field: 'product.name' },
-            { title: '简称', field: 'product.shortName' },
-            { title: '零售价', field: 'product.price0', type: 'numeric' },
-            // {
-            //   title: '状态', field: 'status',
-            //   render: prod => prod.status !== undefined ? (
-            //     prod.status === 'Y' ?
-            //       <span style={{color: 'green'}}>审批通过</span> :
-            //       <span style={{color: 'blue'}}>审批中</span>
-            //   ) : <span style={{color: 'red'}}>未申请审批</span>
-            // },
-            {
-              title: '预览图',
-              field: 'imgUrl',
-              render: prodData =>
-                <ProdImageSmall
-                  productId={prodData.product.id}
-                  imageUrlBase='/product'
-                  imgUrl0={prodData.assetItems.length == 0 ? '' : `/${prodData.product.id}/${prodData.assetItems[0].url}`}
-                  prodName={prodData.product.name} />
-            }
-          ]}
-          data={this.state.products}
-          // detailPanel={prodData => {
-          //   return (
-          //     <ProdImages
-          //       imgUrl={prodData.assetItems.length == 0 ? '#' : `/product/${prodData.product.id}/${prodData.assetItems[0].url}`}
-          //       prodName={prodData.product.name} />
-
-          //   )
-          // }}
-          
-          // todo: disable editing for now
-          editable={{
-            onRowAdd: this.onRowAdd,
-            onRowUpdate: this.onRowUpdate,
-            onRowDelete: this.onRowDelete
-          }}
-        />
-      </Container>
   );
   }
 };

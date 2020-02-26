@@ -51,7 +51,7 @@ function useUserDispatch() {
 }
 
 export {
-  UserProvider, useUserState, useUserDispatch, loginUser, signOut,
+  UserDispatchContext, UserProvider, useUserState, useUserDispatch, loginUser, signOut,
   getUid, extractXAuthToken, tokensToHeaders, tokensToHeadersMultiPart, withPageAndCount, SessionKeys
 };
 
@@ -133,15 +133,19 @@ const SessionKeys = {
   uidKey: '_uid_'
 };
 
-const _tokensToHeaders = (contentType, history) => {
+const _tokensToHeaders = (contentType, history, dispatch) => {
   let accessToken = sessionStorage.getItem(SessionKeys.accessTokenKey);
+  log('accessToken: ', accessToken);
+  log('history: ', history);
+  log('dispatch: ', dispatch);
+
   if (!accessToken) {
     log('no access token found!');
-    throw Error ('no access token found!');
+    //throw Error ('no access token found!');
     // const dispatch = useUserDispatch();
-    // dispatch({ type: "LOGIN_REQUIRED" });
-    // history.push("/login");
-    // return {};
+    dispatch({ type: "LOGIN_REQUIRED" });
+    history.push("/login");
+    return {};
   }
   var headers = { 'Authorization': `Bearer ${accessToken}` };
   if (contentType) headers['Content-Type'] = contentType;
@@ -153,11 +157,11 @@ const _tokensToHeaders = (contentType, history) => {
   return headers;
 };
   
-const tokensToHeadersMultiPart = (history) => {
-  return _tokensToHeaders(null, history);
+const tokensToHeadersMultiPart = (history, dispatch) => {
+  return _tokensToHeaders(null, history, dispatch);
 };
-const tokensToHeaders = (history) => {
-  return _tokensToHeaders('application/json', history);
+const tokensToHeaders = (history, dispatch) => {
+  return _tokensToHeaders('application/json', history, dispatch);
 };
 
 const withPageAndCount = (entityName, entities) => {

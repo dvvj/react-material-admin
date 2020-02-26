@@ -4,8 +4,8 @@ import {getUid, extractXAuthToken, tokensToHeaders, tokensToHeadersMultiPart, wi
 import {log} from '../utils/Util';
 
 export default class DataSrcDS {
-  constructor(history, error401Handler, errorUnkHandler) {
-    //this.userDispatch = useUserDispatch();
+  constructor(userDispatch, history, error401Handler, errorUnkHandler) {
+    this.userDispatch = userDispatch;
     this.history = history;
     this.error401Handler = error401Handler;
     this.errorUnkHandler = errorUnkHandler;

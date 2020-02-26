@@ -57,6 +57,7 @@ class ProfOrgProdTable extends Component {
     this.sbarRef = React.createRef();
 
     this.dataSrc = new DataSrcDS(
+      props.userDispatch,
       props.history,
       () => log('ProdMgmt error handler todo')
     );
