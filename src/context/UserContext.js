@@ -11,7 +11,9 @@ function userReducer(state, action) {
     case "LOGIN_SUCCESS":
       return { ...state, isAuthenticated: true };
     case "LOGIN_REQUIRED":
-      return { ...state, isAuthenticated: false };
+      const newState = { ...state, isAuthenticated: false };
+      log('in dispatch...', state, newState);
+      return newState;
     case "SIGN_OUT_SUCCESS":
       return { ...state, isAuthenticated: false };
     default: {
@@ -194,9 +196,11 @@ const _tokensToHeaders = (contentType, history, dispatch) => {
     log('no access token found!');
     //throw Error ('no access token found!');
     // const dispatch = useUserDispatch();
+    localStorage.removeItem("id_token");
     dispatch({ type: "LOGIN_REQUIRED" });
     history.push("/login");
-    return {};
+    throw Error ('no access token found!');
+    //return {};
   }
   var headers = { 'Authorization': `Bearer ${accessToken}` };
   if (contentType) headers['Content-Type'] = contentType;

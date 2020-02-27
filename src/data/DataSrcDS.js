@@ -108,7 +108,7 @@ export default class DataSrcDS {
         }
   
         let data = response.data;
-        let res = callback(data);
+        let res = callback ? callback(data) : data;
         return({data: res, xauth});
       })
       .catch(err => {
@@ -385,10 +385,7 @@ export default class DataSrcDS {
   getCurrUserStat = () => {
     const uid = getUid();
     return this.doPostTkr(
-      {
-        data: {uid},
-        url: '/api/userStats'
-      }
+      {uid}, '/api/userStats'
     );
   }
 

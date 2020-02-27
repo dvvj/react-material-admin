@@ -129,7 +129,8 @@ function StyledTreeItem(props) {
   const handleClickMedProf = handleClickAgent
 
   const handleClickOrg = async () => {
-    let userStatResp = await getCurrUserStat();
+    const userStatResp = await getCurrUserStat();
+    // log('userStatResp: ', getCurrUserStat, userStatResp);
     postHandleClick(userStatResp.data);
   }
 
