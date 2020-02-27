@@ -22,6 +22,10 @@ const RouteConsts = {
   PorgSalesNtwk: {
     link: "/app/porg-sales-ntwk",
     label: "销售网络"
+  },
+  PorgPriceMgmt: {
+    link: "/app/porg-price-mgmt",
+    label: "价格体系设置"
   }
 };
 
