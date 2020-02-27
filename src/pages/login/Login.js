@@ -57,7 +57,7 @@ function Login(props) {
           {activeTabId === 0 && (
             <React.Fragment>
               <Typography variant="h1" className={classes.greeting}>
-              后台管理工具
+              后台管理工具(EP: {process.env.REACT_APP_ADMIN_REST_ENDPOINT})
               </Typography>
               {/* <Button size="large" className={classes.googleButton}>
                 <img src={google} alt="google" className={classes.googleIcon} />

@@ -293,7 +293,7 @@ export default class DataSrcDS {
 
   doLogin = async (userpass, callback) => {
     //let {user, pass} = userpass;
-    // log('in doLogin', user, pass);
+    log('in doLogin, endpoint:', process.env.REACT_APP_ADMIN_REST_ENDPOINT);
     return this.doPost(
       userpass,
       '/api/login',

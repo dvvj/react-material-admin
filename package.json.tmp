@@ -32,7 +32,28 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://webapp.wonder4.life:20443",
+  "proxy": {
+    "/api": {
+      "target": "https://webapp.wonder4.life:20443",
+      "changeOrigin": true,
+      "secure": false
+    },
+    "/product": {
+      "target": "https://webapp.wonder4.life:20443",
+      "changeOrigin": true,
+      "secure": false
+    },
+    "/proforg": {
+      "target": "https://webapp.wonder4.life:20443",
+      "changeOrigin": true,
+      "secure": false
+    },
+    "/admin": {
+      "target": "https://webapp.wonder4.life:20443",
+      "changeOrigin": true,
+      "secure": false
+    }
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
