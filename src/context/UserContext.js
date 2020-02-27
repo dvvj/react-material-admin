@@ -199,7 +199,8 @@ const _tokensToHeaders = (contentType, history, dispatch) => {
     localStorage.removeItem("id_token");
     dispatch({ type: "LOGIN_REQUIRED" });
     history.push("/login");
-    throw Error ('no access token found!');
+    //throw Error ('no access token found!');
+    return null;
     //return {};
   }
   var headers = { 'Authorization': `Bearer ${accessToken}` };

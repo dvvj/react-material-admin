@@ -95,6 +95,8 @@ export default class DataSrcDS {
 
     if (addTokens) {
       const headers = tokensToHeaders(this.history, this.userDispatch);
+      if (!headers)
+        return;
       options['headers'] = headers;
     }
   
