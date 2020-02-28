@@ -3,6 +3,14 @@ import Axios from 'axios';
 import {getUid, extractXAuthToken, tokensToHeaders, tokensToHeadersMultiPart, withPageAndCount, SessionKeys, useUserDispatch } from '../context/UserContext';
 import {log} from '../utils/Util';
 
+if (process.env.REACT_APP_ADMIN_REST_ENDPOINT) {
+  log(`Setting baseURL to ${process.env.REACT_APP_ADMIN_REST_ENDPOINT}`);
+  Axios.defaults.baseURL = process.env.REACT_APP_ADMIN_REST_ENDPOINT;
+}
+else {
+  log(`Skip setting baseURL because it's empty`);
+}
+
 export default class DataSrcDS {
   constructor(userDispatch, history, error401Handler, errorUnkHandler) {
     this.userDispatch = userDispatch;
