@@ -26,7 +26,7 @@ import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
 import ApplyMedSalesDlg from '../xg-adm-applysalesdlg/ApplyMedSalesDlg';
 
 import {getUid} from '../../context/UserContext';
-import {log} from '../../utils/Util';
+import {log, restBaseUrl} from '../../utils/Util';
 
 const tableIcons = {
     ApplySales: forwardRef((props, ref) => <PlaylistAddCheck {...props} ref={ref} />),
@@ -184,7 +184,7 @@ class ProfOrgProdTable extends Component {
               title: '预览图',
               field: 'imgUrl',
               render: prodData => {
-                let url = prodData.assetItems.length === 0 ? '' : `/product/${prodData.product.id}/${prodData.assetItems[0].url}`;
+                let url = prodData.assetItems.length === 0 ? '' : `${restBaseUrl}/product/${prodData.product.id}/${prodData.assetItems[0].url}`;
                 return <img src={url} style={{width: 50}}/>
               }
             }

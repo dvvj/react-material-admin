@@ -28,7 +28,7 @@ import ApplyMedSalesDlg from '../xg-adm-applysalesdlg/ApplyMedSalesDlg';
 import SnackbarUtil from '../../components/XgSnackBarUtil/SnackbarUtil';
 
 import { withStyles } from '@material-ui/core/styles';
-import {log} from '../../utils/Util';
+import {log, restBaseUrl} from '../../utils/Util';
 
 
 const tableIcons = {
@@ -222,20 +222,12 @@ class AdmProdTable extends Component {
                 render: prodData =>
                   <ProdImageSmall
                     productId={prodData.product.id}
-                    imageUrlBase='/product'
+                    imageUrlBase={`${restBaseUrl}/product`}
                     imgUrl0={prodData.assetItems.length == 0 ? '' : `/${prodData.product.id}/${prodData.assetItems[0].url}`}
                     prodName={prodData.product.name} />
               }
             ]}
             data={this.state.products}
-            // detailPanel={prodData => {
-            //   return (
-            //     <ProdImages
-            //       imgUrl={prodData.assetItems.length == 0 ? '#' : `/product/${prodData.product.id}/${prodData.assetItems[0].url}`}
-            //       prodName={prodData.product.name} />
-  
-            //   )
-            // }}
             
             // todo: disable editing for now
             editable={{

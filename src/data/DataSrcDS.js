@@ -1,11 +1,11 @@
 import Axios from 'axios';
 
 import {getUid, extractXAuthToken, tokensToHeaders, tokensToHeadersMultiPart, withPageAndCount, SessionKeys, useUserDispatch } from '../context/UserContext';
-import {log} from '../utils/Util';
+import {log, restBaseUrl} from '../utils/Util';
 
-if (process.env.REACT_APP_ADMIN_REST_ENDPOINT) {
-  log(`Setting baseURL to ${process.env.REACT_APP_ADMIN_REST_ENDPOINT}`);
-  Axios.defaults.baseURL = process.env.REACT_APP_ADMIN_REST_ENDPOINT;
+if (restBaseUrl) {
+  log(`Setting baseURL to ${restBaseUrl}`);
+  Axios.defaults.baseURL = restBaseUrl;
 }
 else {
   log(`Skip setting baseURL because it's empty`);
