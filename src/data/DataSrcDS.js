@@ -11,6 +11,19 @@ else {
   log(`Skip setting baseURL because it's empty`);
 }
 
+const addCorsHeader = (headers, method) => {
+  let newHeaders = {...headers};
+  if (process.env.REACT_APP_ADMIN_ORIGIN) {
+    log(`ORIGIN [${process.env.REACT_APP_ADMIN_ORIGIN}] present, adding header.`);
+    newHeaders['ORIGN'] = process.env.REACT_APP_ADMIN_ORIGIN;
+    // newHeaders['Access-Control-Request-Method'] = method;
+  }
+  else {
+    log(`ORIGIN not present, skip adding header.`);
+  }
+  return newHeaders;
+}
+
 export default class DataSrcDS {
   constructor(userDispatch, history, error401Handler, errorUnkHandler) {
     this.userDispatch = userDispatch;
@@ -55,10 +68,11 @@ export default class DataSrcDS {
     const reqs = dataUrlCallbacks.map(duc => {
       const {data, method, url} = duc;
       const m = method || 'POST';
+      const thisHeaders = addCorsHeader(headers, m);
       // log('method: ', m);
       const options = {
         method: m,
-        headers,
+        headers: thisHeaders,
         url,
         data
       };
@@ -105,7 +119,7 @@ export default class DataSrcDS {
       const headers = tokensToHeaders(this.history, this.userDispatch);
       if (!headers)
         return;
-      options['headers'] = headers;
+      options['headers'] = addCorsHeader(headers, 'POST');
     }
   
     return Axios(options)
@@ -143,7 +157,7 @@ export default class DataSrcDS {
     let headers = tokensToHeaders(this.history, this.userDispatch);
     const options = {
       method: 'GET',
-      headers,
+      headers: addCorsHeader(headers, 'GET'),
       url
     };
   

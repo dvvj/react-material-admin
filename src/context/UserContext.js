@@ -210,6 +210,7 @@ const _tokensToHeaders = (contentType, history, dispatch) => {
   if (xauth) {
     headers['X-Auth-Token'] = xauth;
   }
+
   return headers;
 };
   

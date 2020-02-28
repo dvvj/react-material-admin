@@ -32,7 +32,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "https://webapp.wonder4.life:20443",
+  "proxy": "https://localhost:20443",
   "eslintConfig": {
     "extends": "react-app"
   },
